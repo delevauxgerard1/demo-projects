@@ -14,6 +14,7 @@
                     </svg>
                     <span class="hidden xs:block ml-2">Nuevo Cliente</span>
                 </button>
+                <h1>Hola</h1>
             </div>
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
