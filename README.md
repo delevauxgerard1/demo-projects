@@ -1,24 +1,3 @@
-# Free Tailwind & Laravel admin dashboard template
-
-![Mosaic TailwindCSS template preview](https://github.com/cruip/laravel-tailwindcss-admin-dashboard-template/assets/2683512/9d256a65-3b8a-4c15-8a4a-865be9fa9a11)
-
-**Mosaic Lite Laravel** is a responsive admin dashboard template built on top of Tailwind CSS and fully coded in Laravel Jetstream. This template is a great starting point for anyone who wants to create a user interface for SaaS products, administrator dashboards, modern web apps, and more.
-Use it for whatever you want, and be sure to reach us out on [Twitter](https://twitter.com/Cruip_com) if you build anything cool/useful with it.
-
-Created and maintained with ❤️ by [Cruip.com](https://cruip.com/).
-
-## Live demo
-
-Check a live demo here 👉️ [https://mosaic.cruip.com/](https://mosaic.cruip.com/?template=laravel)
-
-## Mosaic Pro
-
-[![Mosaic Pro](https://user-images.githubusercontent.com/2683512/151177961-2ff5b838-3745-48dc-80c8-80b043971483.png)](https://cruip.com/mosaic/)
-
-## Design files
-
-If you need the design files, you can download them from Figma's Community 👉 https://bit.ly/3sigqHe
-
 ## Table of contents
 
 * [Usage](#usage)
@@ -80,23 +59,3 @@ can run the following command in your terminal window.
 You should receive a message similar to this
 ``Starting Laravel development server: http://127.0.0.1:8000`` simply copy the URL
 in your browser and you'll be ready to test out your new mosaic laravel app.
-
-
-## Credits
-
-- [Nucleo](https://nucleoapp.com/)
-
-## Terms and License
-
-- License 👉 [https://cruip.com/terms/](https://cruip.com/terms/).
-- Copyright 2022 [Cruip](https://cruip.com/).
-- Use it for personal and commercial projects, but please don’t republish, redistribute, or resell the template.
-- Attribution is not required, although it is really appreciated.
-
-## About Us
-
-We're an Italian developer/designer duo creating high-quality design/code resources for developers, makers, and startups.
-
-## Stay in the loop
-
-If you would like to know when we release new resources, you can follow us on [Twitter](https://twitter.com/Cruip_com), or you can subscribe to our monthly [newsletter](https://cruip.com/#subscribe).
