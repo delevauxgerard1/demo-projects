@@ -14,9 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        \App\Models\Cliente::factory(100)->create();
 
         $this->call([
             DashboardTableSeeder::class,
+            UserSeeder::class
         ]);
     }
 }
