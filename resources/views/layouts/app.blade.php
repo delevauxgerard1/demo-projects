@@ -9,6 +9,7 @@
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Styles -->
         @livewireStyles
@@ -59,5 +60,55 @@
         </div>
 
         @livewireScripts
+
+        <script>
+            window.addEventListener('show-delete-confirmation', event => {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "No podrás revertir los cambios",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Si, borrar!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.emit('deleteConfirmed');
+                    }
+                })
+            });
+    
+            window.addEventListener('clienteBorrado', event => {
+                Swal.fire('Cliente borrado correctamente!', event.detail.message, 'success')
+            });
+    
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top',
+                showConfirmButton: false,
+                timer: 3000,
+                // timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+    
+            Livewire.on('alert', function(message) {
+                Toast.fire(
+                    message,
+                    '',
+                    'success'
+                )
+            })
+            Livewire.on('error', function(message) {
+                Toast.fire(
+                    message,
+                    '',
+                    'error'
+                )
+            })
+        </script>
+
     </body>
 </html>

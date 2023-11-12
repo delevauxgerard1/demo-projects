@@ -36,7 +36,7 @@
                             x-transition:leave-start="opacity-100 translate-y-0"
                             x-transition:leave-end="opacity-0 translate-y-4" x-cloak>
                             <div class="bg-white dark:bg-slate-800 rounded shadow-lg overflow-auto max-w-lg w-full max-h-full"
-                                @click.outside="modalOpen = false" @keydown.escape.window="modalOpen = false">
+                                @keydown.escape.window="modalOpen = false">
                                 <!-- Modal header -->
                                 <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-700">
                                     <div class="flex justify-between items-center">
@@ -59,38 +59,47 @@
                                         <div class="col-span-5 col-start-1">
                                             <label class="block text-sm font-medium mb-1" for="nombres">Nombres<span
                                                     class="text-rose-500">*</span></label>
-                                            <input id="name" class="form-input w-full px-2 py-1" type="text"
+                                            <input id="nombres" class="form-input w-full px-2 py-1" type="text"
                                                 wire:model="nombres" required />
+                                            @error('nombres')
+                                                <small class="text-red-600">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                         <div class="col-span-3 col-start-1">
                                             <label class="block text-sm font-medium mb-1" for="apellidos">Apellidos<span
                                                     class="text-rose-500">*</span></label>
-                                            <input id="name" class="form-input w-full px-2 py-1" type="text"
+                                            <input id="apellidos" class="form-input w-full px-2 py-1" type="text"
                                                 wire:model="apellidos" required />
+                                            @error('apellidos')
+                                                <small class="text-red-600">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1" for="email">Email<span
                                                     class="text-rose-500">*</span></label>
                                             <input id="email" class="form-input w-full px-2 py-1" type="text"
                                                 wire:model="email" required />
+                                            @error('email')
+                                                <small class="text-red-600">{{ $message }}</small>
+                                            @enderror
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1"
                                                 for="domicilio">Domicilio</label>
                                             <input id="domicilio" class="form-input w-full px-2 py-1" type="text"
-                                                wire:model="nombres" required />
+                                                wire:model="domicilio" required />
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1" for="tel_movil">Teléfono
                                                 Móvil</label>
                                             <input id="tel_movil" class="form-input w-full px-2 py-1" type="text"
-                                                wire:model="nombres" required />
+                                                wire:model="tel_movil" required />
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1"
                                                 for="profesion">Profesión</label>
                                             <input id="profesion" class="form-input w-full px-2 py-1" type="text"
-                                                wire:model="nombres" required />
+                                                wire:model="profesion" required />
                                         </div>
                                     </div>
                                 </div>
@@ -100,11 +109,11 @@
                                         <button
                                             class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                                             @click="modalOpen = false">Cancel</button>
-
-
                                         <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                            wire:click="crearCliente" x-on:click="modalOpen = false">Crear
+                                            wire:click="crearCliente"
+                                            x-on:click="if (!@this.creatingCliente) modalOpen = false">Crear
                                             Cliente</button>
+
                                     </div>
                                 </div>
                             </div>
@@ -116,19 +125,19 @@
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
 
                 <!-- Filter button -->
-                <x-dropdown-filter align="right" />
+                {{-- <x-dropdown-filter align="right" /> --}}
 
                 <!-- Datepicker built with flatpickr -->
-                <x-datepicker />
+                {{-- <x-datepicker /> --}}
             </div>
         </div>
         <div class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
             <header class="px-5 py-4">
                 <h2 class="font-semibold text-slate-800 dark:text-slate-100">Todos los clientes: <span
-                        class="text-slate-400 dark:text-slate-500 font-medium">{{ $clientes->count() }}</span></h2>
+                        class="text-slate-400 dark:text-slate-500 font-medium">{{ $clientesCount }}</span></h2>
             </header>
 
-            <div x-data="handleSelect">
+            <div>
 
                 <!-- Table -->
                 <div class="overflow-x-auto">
@@ -137,55 +146,60 @@
                         <thead
                             class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-900/20 border-t border-b border-slate-200 dark:border-slate-700">
                             <tr>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-5 py-3 text-xs text-left">
                                     <span class="font-semibold">Nombres</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-3 py-3 text-xs text-left">
                                     <span class="font-semibold">Apellidos</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-2 py-3 text-xs text-left">
                                     <span class="font-semibold">Domicilio</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-2 py-3 text-xs text-left">
                                     <span class="font-semibold">Teléfono Movil</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-2 py-3 text-xs text-left">
                                     <span class="font-semibold">Profesión</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-2 py-3 text-xs text-left">
                                     <span class="font-semibold">Email</span>
                                 </th>
-                                <th class="px-5 py-3 text-sm text-left">
+                                <th class="px-2 py-3 text-xs text-left">
                                     <span class="font-semibold">Acciones</span>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm divide-y divide-slate-200 dark:divide-slate-700">
+                        <tbody class="text-xs divide-y divide-slate-200 dark:divide-slate-700">
                             @foreach ($clientes as $cliente)
                                 <tr>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left"> {{ $cliente->nombres }} </div>
+                                        <div class="text-xs"> {{ $cliente->nombres }} </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left"> {{ $cliente->apellidos }} </div>
+                                        <div class="text-xs"> {{ $cliente->apellidos }} </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left"> {{ $cliente->domicilio }} </div>
+                                        <div class="text-xs"> {{ $cliente->domicilio }} </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-center"> {{ $cliente->tel_movil }} </div>
+                                        <div class="text-xs"> {{ $cliente->tel_movil }} </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left font-medium dark:text-sky-400"> {{ $cliente->profesion }}
+                                        <div class="text-left text-xs {{-- font-medium dark:text-sky-400 --}}"> {{ $cliente->profesion }}
                                         </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left font-medium dark:text-emerald-400"> {{ $cliente->email }}
+                                        <div class="text-left text-xs {{-- font-medium dark:text-emerald-400 --}}"> {{ $cliente->email }}
                                         </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <button class="text-yellow-500 focus:outline-none" wire:click="clienteEditar({{ $maquina }})"
-                                            title="Editar">
+                                        <button class="focus:outline-none px-1" wire:click="clientesProyectos({{ $cliente->id }})"
+                                            title="Proyectos">
+                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 576 512" stroke-width="2" class="w-7 h-6"><path d="M0 96C0 60.7 28.7 32 64 32H196.1c19.1 0 37.4 7.6 50.9 21.1L289.9 96H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16H286.6c-10.6 0-20.8-4.2-28.3-11.7L213.1 87c-4.5-4.5-10.6-7-17-7H64z" fill="green" /></svg>
+                                        </button>
+                                        <button class="text-yellow-500 focus:outline-none"
+                                            wire:click="abrirModalEdicion({{ $cliente->id }})" title="Editar">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                 class="w-7 h-7">
@@ -194,8 +208,8 @@
                                                 </path>
                                             </svg>
                                         </button>
-                                        <button {{-- wire:click.prevent="deleteConfirmation({{ $maquina }})" --}} class="text-red-600 focus:outline-none"
-                                            title="Eliminar">
+                                        <button wire:click.prevent="deleteConfirmation({{ $cliente }})"
+                                            class="text-red-600 focus:outline-none" title="Eliminar">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                                                 class="w-7 h-7">
@@ -204,42 +218,130 @@
                                                 </path>
                                             </svg>
                                         </button>
+                                    </td>
+                                </tr>
+                        </tbody>
+                        @endforeach
+                    </table>
                 </div>
-                </td>
-                </tr>
-                @endforeach
-
-                </tbody>
-                </table>
 
 
             </div>
         </div>
+        <div class="mt-8">
+            {{ $clientes->links() }}
+        </div>
     </div>
-    <div class="mt-8">
-        {{ $clientes->links() }}
+
+    <div x-data="{ modalOpen: @entangle('clienteModalOpen') }">
+        <div class="fixed inset-0 bg-slate-900 bg-opacity-70 z-50 transition-opacity" x-show="modalOpen"
+            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true" x-cloak>
+        </div>
+
+        <div id="feedback-modal"
+            class="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6"
+            role="dialog" aria-modal="true" x-show="modalOpen"
+            x-transition:enter="transition ease-in-out duration-200"
+            x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in-out duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 translate-y-4"
+            x-cloak>
+            <div class="bg-white dark:bg-slate-800 rounded shadow-lg overflow-auto max-w-lg w-full max-h-full"
+                @keydown.escape.window="modalOpen = false">
+                <!-- Modal header -->
+                <div class="px-5 py-3 border-b border-slate-200 dark:border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <div class="font-semibold text-slate-800 dark:text-slate-100">Actualizar Cliente
+                        </div>
+                        <button
+                            class="text-slate-400 dark:text-slate-500 hover:text-slate-500 dark:hover:text-slate-400"
+                            @click="modalOpen = false">
+                            <div class="sr-only">Close</div>
+                            <svg class="w-4 h-4 fill-current">
+                                <path
+                                    d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <!-- Modal content -->
+                <div class="px-5 py-4">
+                    <div class="space-y-3 grid grid-cols-4 md:grid-cols-6 gap-4">
+                        <div class="col-span-5 col-start-1">
+                            <label class="block text-sm font-medium mb-1" for="nombres">Nombres<span
+                                    class="text-rose-500">*</span></label>
+                            <input id="editNombres" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editNombres" required />
+                            @error('editNombres')
+                                <small class="text-red-600">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-span-3 col-start-1">
+                            <label class="block text-sm font-medium mb-1" for="apellidos">Apellidos<span
+                                    class="text-rose-500">*</span></label>
+                            <input id="editApellidos" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editApellidos" required />
+                            @error('editApellidos')
+                                <small class="text-red-600">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium mb-1" for="email">Email<span
+                                    class="text-rose-500">*</span></label>
+                            <input id="editEmail" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editEmail" required />
+                            @error('editEmail')
+                                <small class="text-red-600">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium mb-1" for="domicilio">Domicilio</label>
+                            <input id="editDomicilio" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editDomicilio" required />
+                        </div>
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium mb-1" for="tel_movil">Teléfono
+                                Móvil</label>
+                            <input id="editTel_movil" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editTel_movil" required />
+                        </div>
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium mb-1" for="profesion">Profesión</label>
+                            <input id="editProfesion" class="form-input w-full px-2 py-1" type="text"
+                                wire:model="editProfesion" required />
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex flex-wrap justify-end space-x-2">
+                        <button
+                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                            @click="modalOpen = false">Cancel</button>
+                        <form wire:submit.prevent="actualizarCliente">
+                            <!-- Campos de edición aquí -->
+                            <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                @click="actualizarCliente">Actualizar Cliente</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <x-jet-dialog-modal wire:model="open">
-        <x-slot name="title">
-            <label class="font-bold text-2xl" for="">Crear Cliente</label>
-        </x-slot>
 
-        <x-slot name="content">
-            <div>
-            </div>
-        </x-slot>
 
-        <x-slot name="footer">
-            <div class="justify-end">
-                <button type="button"
-                    class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ">Crear
-                    Cliente</button>
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('abrirModalEdicion', () => {
+                Livewire.emit('clienteModalOpen', true);
+            });
 
-                <button type="button"
-                    class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out ">Cancelar</button>
-            </div>
-
-        </x-slot>
-    </x-jet-dialog-modal>
+            Livewire.on('cerrarModalEdicion', () => {
+                Livewire.emit('clienteModalOpen', false);
+            });
+        });
+    </script>
 </div>
