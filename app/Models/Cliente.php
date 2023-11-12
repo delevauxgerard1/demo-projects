@@ -21,4 +21,9 @@ class Cliente extends Model
         'email',
         'activo'
     ];
+
+    public function proyectos()
+    {
+        return $this->hasMany(Proyecto::class, 'cliente_id');
+    }
 }

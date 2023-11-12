@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DataFeedController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\Cliente\IndexCliente;
+use App\Http\Livewire\Proyecto\IndexClientesProyectos;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,10 +19,9 @@ use App\Http\Livewire\Cliente\IndexCliente;
 Route::redirect('/', 'login');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-
-    // Route for the getting the data feed
     Route::get('/json-data-feed', [DataFeedController::class, 'getDataFeed'])->name('json_data_feed');
     Route::get('/dashboard', IndexCliente::class)->name('dashboard');
+    Route::get('/cliente/proyectos/{clienteid}', IndexClientesProyectos::class)->name('clientes.proyectos');
     Route::fallback(function() {
         return view('pages/utility/404');
     });    
