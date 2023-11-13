@@ -23,22 +23,71 @@ class ProyectoSeeder extends Seeder
             $clientesConApellidos[$clienteId] = $apellido . ' ' . $nombre;
         }
 
-        for ($clienteId = 3; $clienteId <= 20; $clienteId++) {
-            $numProyectos = rand(1, 3); // Determina aleatoriamente el número de proyectos (1, 2, o 3)
+        for ($clienteId = 1; $clienteId <= 20; $clienteId++) {
+            $numProyectos = rand(1, 3);
             
             for ($i = 1; $i <= $numProyectos; $i++) {
+                // Nombre del proyecto inventado
+                $nombreProyecto = 'Proyecto ' . $this->generarNombreProyecto() . ' - ' . $i;
+
                 DB::table('proyectos')->insert([
-                    'nombre' => 'Proyecto ' . $clientesConApellidos[$clienteId] . ' - ' . $i,
+                    'nombre' => $nombreProyecto,
                     'descripcion' => 'Descripción del proyecto ' . $i,
                     'cliente_id' => $clienteId,
                     'fecha_inicio' => now(),
-                    'fecha_fin' => now()->addDays(30), // Ajusta la fecha de finalización según tus necesidades
-                    'estado_id' => 1, // Asigna el estado que desees
-                    'responsable_id' => 1, // Asigna el responsable que desees
+                    'fecha_fin' => now()->addDays(30),
+                    'estado_id' => 1,
+                    'responsable_id' => 1,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
             }
         }
     }
+
+    /**
+     * Genera un nombre aleatorio para el proyecto.
+     *
+     * @return string
+     */
+    private function generarNombreProyecto()
+{
+    $rubros = [
+        'Tecnología de la Información (TI)',
+        'Salud y Medicina',
+        'Educación',
+        'Finanzas y Contabilidad',
+        'Servicios Financieros',
+        'Manufactura',
+        'Agricultura',
+        'Alimentación y Bebidas',
+        'Comercio Minorista',
+        'Comercio Mayorista',
+        'Construcción',
+        'Energía y Recursos Naturales',
+        'Medio Ambiente',
+        'Inmobiliaria',
+        'Arte y Entretenimiento',
+        'Moda y Diseño',
+        'Investigación y Desarrollo',
+        'Consultoría',
+        'Servicios Legales',
+        'Servicios de Ingeniería',
+        'Turismo y Hospitalidad',
+        'Transporte y Logística',
+        'Telecomunicaciones',
+        'Servicios Públicos',
+        'Servicios Sociales y Comunitarios',
+        'Deportes y Recreación',
+        'Publicidad y Marketing',
+        'Medios de Comunicación y Periodismo',
+        'Tecnología Verde (Eco-Tecnología)',
+        'Ciencia y Tecnología'
+    ];
+
+    $nombreAleatorio = $rubros[array_rand($rubros)];
+
+    return $nombreAleatorio;
+}
+
 }

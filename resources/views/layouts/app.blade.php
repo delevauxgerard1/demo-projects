@@ -81,6 +81,10 @@
             window.addEventListener('clienteBorrado', event => {
                 Swal.fire('Cliente borrado correctamente!', event.detail.message, 'success')
             });
+
+            window.addEventListener('tareaBorrada', event => {
+                Swal.fire('Tarea borrada correctamente!', event.detail.message, 'success')
+            });
     
             const Toast = Swal.mixin({
                 toast: true,

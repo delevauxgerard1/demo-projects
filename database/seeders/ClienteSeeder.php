@@ -15,7 +15,7 @@ class ClienteSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('es_AR'); // Configura Faker para datos en español (Argentina)
+        $faker = Faker::create('es_AR');
 
         for ($i = 0; $i < 20; $i++) {
             DB::table('clientes')->insert([

@@ -16,7 +16,8 @@ class Tarea extends Model
         'nombre', 
         'descripcion',
         'fecha_limite',
-        'completada'
+        'completada',
+        'activo',
     ];
 
     public function proyecto()
