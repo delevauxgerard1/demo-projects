@@ -23,8 +23,8 @@ return new class extends Migration
         $table->date('fecha_fin')->nullable();
         $table->bigInteger('estado_id')->unsigned()->nullable()->default(1);
         $table->foreign('estado_id')->references('id')->on('estados');
-        $table->bigInteger('responsable_id')->unsigned();
-        $table->foreign('responsable_id')->references('id')->on('users')->nullable();
+        $table->bigInteger('responsable_id')->unsigned()->nullable();
+        $table->foreign('responsable_id')->references('id')->on('users');
         $table->string('activo')->default(1);
         $table->timestamps();
     });

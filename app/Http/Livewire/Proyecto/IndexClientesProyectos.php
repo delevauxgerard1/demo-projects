@@ -28,7 +28,8 @@ class IndexClientesProyectos extends Component
     {
         $this->clienteid = $clienteid;
         $this->cliente = Cliente::where('id', $this->clienteid)->first();
-        $this->proyectos = Proyecto::where('cliente_id', $this->clienteid)->get();
+        $this->proyectos = Proyecto::where('cliente_id', $this->clienteid)
+            ->where("activo", "=", "1")->get();
 
         if ($proyectoid !== null) {
             $this->proyectoSeleccionado = Proyecto::find($proyectoid);

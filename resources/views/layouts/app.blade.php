@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- Styles -->
         @livewireStyles
@@ -84,6 +85,10 @@
 
             window.addEventListener('tareaBorrada', event => {
                 Swal.fire('Tarea borrada correctamente!', event.detail.message, 'success')
+            });
+
+            window.addEventListener('proyectoBorrado', event => {
+                Swal.fire('Proyecto borrado correctamente!', event.detail.message, 'success')
             });
     
             const Toast = Swal.mixin({
