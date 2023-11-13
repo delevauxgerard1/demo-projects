@@ -127,7 +127,7 @@ class IndexCliente extends Component
         $this->emit('alert', 'Cliente actualizado correctamente!');
     }
 
-    // Borrar siniestro
+    // Borrar cliente
     public $delete_id;
 
     public function deleteConfirmation($id){

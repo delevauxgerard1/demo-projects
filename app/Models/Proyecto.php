@@ -18,7 +18,8 @@ class Proyecto extends Model
         'fecha_inicio',
         'fecha_fin',
         'estado_id',
-        'responsable_id'
+        'responsable_id',
+        'activo'
     ];
 
     public function estado()
@@ -34,5 +35,10 @@ class Proyecto extends Model
     public function tareas()
     {
         return $this->hasMany(Tarea::class, 'proyecto_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class, 'responsable_id');
     }
 }
