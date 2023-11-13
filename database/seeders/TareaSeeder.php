@@ -6,6 +6,7 @@ use App\Models\Proyecto;
 use App\Models\Tarea;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class TareaSeeder extends Seeder
 {
@@ -29,10 +30,17 @@ class TareaSeeder extends Seeder
 
         foreach ($proyectos as $proyecto) {
             foreach ($tareas as $nombreTarea => $descripcionTarea) {
+                $completada = in_array($nombreTarea, array_keys(array_slice($tareas, 0, 5))) ? 1 : 0;
+
+                // Generar una fecha aleatoria en el año 2023
+                $fechaCierre = Carbon::createFromDate(2023, rand(1, 12), rand(1, 28));
+
                 Tarea::create([
                     'proyecto_id' => $proyecto->id,
                     'nombre' => $nombreTarea,
                     'descripcion' => $descripcionTarea,
+                    'completada' => $completada,
+                    'fecha_cierre' => $fechaCierre,
                 ]);
             }
         }
