@@ -29,7 +29,6 @@ class ClienteSeeder extends Seeder
         'Enfermero/a',
         'Contador',
         'Músico'
-        // Añade más profesiones si lo deseas
     ];
 
     /**
@@ -43,7 +42,7 @@ class ClienteSeeder extends Seeder
 
         for ($i = 0; $i < 20; $i++) {
             $nombreCompleto = $faker->firstName;
-            $nombre = explode(' ', $nombreCompleto)[0]; // Tomar solo la primera palabra
+            $nombre = explode(' ', $nombreCompleto)[0];
 
             $apellido = $faker->lastName;
 
