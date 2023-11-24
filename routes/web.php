@@ -6,17 +6,7 @@ use App\Http\Livewire\Cliente\IndexCliente;
 use App\Http\Livewire\IndexProyectos;
 use App\Http\Livewire\IndexReportes;
 use App\Http\Livewire\Proyecto\IndexClientesProyectos;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\FacturaController;
 
 Route::redirect('/', 'login');
 
@@ -27,6 +17,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/reportes', IndexReportes::class)->name('reportes');
     Route::get('/cliente/proyectos/{clienteid}', IndexClientesProyectos::class)->name('clientes.proyectos');
     Route::get('/cliente/proyectos/{clienteid}/{proyectoid}', IndexClientesProyectos::class)->name('clientes.proyectosid');
+    Route::get('/generar-factura/{proyectoId}', [FacturaController::class, 'generarFacturaPDF']);
     Route::fallback(function() {
         return view('pages/utility/404');
     });    

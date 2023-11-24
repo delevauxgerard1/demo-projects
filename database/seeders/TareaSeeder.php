@@ -29,10 +29,15 @@ class TareaSeeder extends Seeder
         ];
 
         foreach ($proyectos as $proyecto) {
+            $estado_id = $proyecto->estado_id;
+
             foreach ($tareas as $nombreTarea => $descripcionTarea) {
                 $completada = in_array($nombreTarea, array_keys(array_slice($tareas, 0, 5))) ? 1 : 0;
 
-                // Generar una fecha aleatoria en el año 2023
+                if ($estado_id === 2) {
+                    $completada = 1;
+                }
+
                 $fechaCierre = Carbon::createFromDate(2023, rand(1, 12), rand(1, 28));
 
                 Tarea::create([

@@ -25,6 +25,7 @@ return new class extends Migration
         $table->foreign('estado_id')->references('id')->on('estados');
         $table->bigInteger('responsable_id')->unsigned()->nullable();
         $table->foreign('responsable_id')->references('id')->on('users');
+        $table->float('ingresos_proyectados')->nullable();
         $table->string('activo')->default(1);
         $table->timestamps();
     });

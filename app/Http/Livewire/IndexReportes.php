@@ -27,6 +27,23 @@ class IndexReportes extends Component
                 ->count();
         }
 
+        $proyectos = Proyecto::where('estado_id', 2)
+            ->where('activo', 1)
+            ->get();
+
+        $totalIngresosProyectados = 0;
+
+        foreach ($proyectos as $proyecto) {
+            $tareasProyecto = Tarea::where('proyecto_id', $proyecto->id)->get();
+            $todasTareasTerminadas = $tareasProyecto->every(function ($tarea) {
+                return $tarea->completada === 1;
+            });
+
+            if ($todasTareasTerminadas) {
+                $totalIngresosProyectados += $proyecto->ingresos_proyectados;
+            }
+        }
+
         $chartData = [
             'labels' => array_column($estados->toArray(), 'nombre'),
             'datasets' => [
@@ -35,15 +52,15 @@ class IndexReportes extends Component
                     'data' => array_values($proyectosPorEstado),
                     'backgroundColor' => [
                         'rgba(75, 192, 192, 0.7)',
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(255, 205, 86, 0.7)',
                         'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 205, 86, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
                     ],
                     'borderColor' => [
                         'rgba(75, 192, 192, 0.7)',
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(255, 205, 86, 0.7)',
                         'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 205, 86, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
                     ],
                     'borderWidth' => 1,
                 ],
@@ -68,7 +85,24 @@ class IndexReportes extends Component
             ]
         ];
 
-        return view('livewire.index-reportes', compact('proyectos', 'chartData', 'chartData2'));
+        $chartData3 = [
+            'labels' => ['Total cobrado'],
+            'datasets' => [
+                [
+                    'label' => 'Total cobrado',
+                    'data' => [$totalIngresosProyectados],
+                    'backgroundColor' => [
+                        'rgba(54, 162, 235, 0.7)',
+                    ],
+                    'borderColor' => [
+                        'white'
+                    ],
+                    'borderWidth' => 1,
+                ],
+            ],
+        ];
+
+        return view('livewire.index-reportes', compact('proyectos', 'chartData', 'chartData2', 'chartData3'));
     }
 }
 
