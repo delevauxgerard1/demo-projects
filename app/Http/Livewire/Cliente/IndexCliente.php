@@ -13,19 +13,29 @@ class IndexCliente extends Component
     public $paginas = 15;
     public $sort = 'id';
     public $direction = 'desc';
+    public $search;
 
-    protected $listeners = ['render','deleteConfirmed'=>'deleteCliente'];
+    protected $listeners = ['render', 'deleteConfirmed' => 'deleteCliente'];
 
     public function render()
     {
-        $clientes = Cliente::where("activo", "=", "1")
-            ->orderBy($this->sort, $this->direction)
+        $query = Cliente::where("activo", "=", "1");
+
+        if (!empty($this->search)) {
+            $query->where(function ($q) {
+                $q->where('nombres', 'like', '%' . $this->search . '%')
+                    ->orWhere('apellidos', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        $clientes = $query->orderBy($this->sort, $this->direction)
             ->paginate($this->paginas);
 
-        $clientesCount = Cliente::where("activo", "=", "1")->count();
+        $clientesCount = $query->count();
 
         return view('livewire.cliente.index-cliente', compact('clientes', 'clientesCount'));
     }
+
 
     public $nombres, $apellidos, $email, $domicilio, $tel_movil, $profesion;
 
@@ -130,18 +140,20 @@ class IndexCliente extends Component
     // Borrar cliente
     public $delete_id;
 
-    public function deleteConfirmation($id){
+    public function deleteConfirmation($id)
+    {
         $this->delete_id = $id;
         $this->dispatchBrowserEvent('show-delete-confirmation');
     }
 
-    public function deleteCliente(){
+    public function deleteCliente()
+    {
         $cliente = Cliente::where('id', $this->delete_id)->first();
         $cliente->update(['activo' => 0]);
 
         $this->dispatchBrowserEvent('clienteBorrado');
         $this->emit('render');
-        $this->emit('alert','Cliente borrado correctamente!');
+        $this->emit('alert', 'Cliente borrado correctamente!');
     }
 
     function clientesProyectos($clienteId)

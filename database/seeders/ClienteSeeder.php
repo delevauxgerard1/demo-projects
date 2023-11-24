@@ -9,6 +9,30 @@ use Faker\Factory as Faker;
 class ClienteSeeder extends Seeder
 {
     /**
+     * Array de profesiones disponibles.
+     *
+     * @var array
+     */
+    protected $profesiones = [
+        'Médico',
+        'Profesor',
+        'Ingeniero',
+        'Abogado',
+        'Programador',
+        'Diseñador gráfico',
+        'Chef',
+        'Escritor',
+        'Artista',
+        'Psicólogo',
+        'Arquitecto',
+        'Científico',
+        'Enfermero/a',
+        'Contador',
+        'Músico'
+        // Añade más profesiones si lo deseas
+    ];
+
+    /**
      * Run the database seeds.
      *
      * @return void
@@ -18,13 +42,18 @@ class ClienteSeeder extends Seeder
         $faker = Faker::create('es_AR');
 
         for ($i = 0; $i < 20; $i++) {
+            $nombreCompleto = $faker->firstName;
+            $nombre = explode(' ', $nombreCompleto)[0]; // Tomar solo la primera palabra
+
+            $apellido = $faker->lastName;
+
             DB::table('clientes')->insert([
-                'nombres' => $faker->firstName,
-                'apellidos' => $faker->lastName,
+                'nombres' => $nombre,
+                'apellidos' => $apellido,
                 'domicilio' => $faker->address,
                 'tel_movil' => $faker->phoneNumber,
-                'profesion' => $faker->jobTitle,
-                'email' => $faker->unique()->safeEmail,
+                'profesion' => $this->profesiones[array_rand($this->profesiones)],
+                'email' => strtolower($nombre . '.' . $apellido . '@example.com'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);

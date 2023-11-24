@@ -70,6 +70,8 @@ class IndexClientesProyectos extends Component
         $tarea->completada = !$tarea->completada;
         $tarea->save();
 
+        $this->verificarTodasTareasCompletadas($this->proyectoSeleccionado->id);
+
         $this->emit('tareaActualizada');
     }
 
@@ -110,6 +112,7 @@ class IndexClientesProyectos extends Component
         ]);
 
         $this->cargarTareas($this->proyectoSeleccionado->id);
+        $this->verificarTodasTareasCompletadas($this->proyectoSeleccionado->id);
 
         $this->creatingCliente = false;
         $this->reset(['nombre', 'fecha_limite', 'descripcion']);
@@ -180,9 +183,52 @@ class IndexClientesProyectos extends Component
         $tarea->update(['activo' => 0]);
 
         $this->dispatchBrowserEvent('tareaBorrada');
+        $this->verificarTodasTareasCompletadas($this->proyectoSeleccionado->id);
+
         $this->emit('render');
         $this->emit('alert', 'Tarea borrada correctamente!');
 
         $this->renderTareas();
+    }
+
+    public function todasTareasCompletadasHabilitarFactura($proyectoId)
+    {
+        $totalTareas = Tarea::where('proyecto_id', $proyectoId)
+            ->where('activo', 1)
+            ->count();
+
+        $tareasCompletadas = Tarea::where('proyecto_id', $proyectoId)
+            ->where('completada', 0)
+            ->where('activo', 1)
+            ->count();
+
+        return ($totalTareas > 0 && $tareasCompletadas === 0);
+    }
+
+    public function generarFactura($proyectoId)
+    {
+        $this->emit('generarFacturaPDF', $proyectoId);
+    }
+
+    private function verificarTodasTareasCompletadas($proyectoId)
+    {
+        $totalTareas = Tarea::where('proyecto_id', $proyectoId)
+            ->where('activo', 1)
+            ->count();
+
+        $tareasCompletadas = Tarea::where('proyecto_id', $proyectoId)
+            ->where('completada', 1)
+            ->where('activo', 1)
+            ->count();
+
+        if ($totalTareas > 0 && $totalTareas === $tareasCompletadas) {
+            $proyecto = Proyecto::find($proyectoId);
+            $proyecto->estado_id = 2;
+            $proyecto->save();
+        } else {
+            $proyecto = Proyecto::find($proyectoId);
+            $proyecto->estado_id = 1;
+            $proyecto->save();
+        }
     }
 }

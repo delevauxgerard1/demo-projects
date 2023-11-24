@@ -62,20 +62,19 @@
                     <div x-data="{ modalOpen: false }">
 
 
-                        <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white" @click.prevent="modalOpen = true"
-                            aria-controls="feedback-modal" title="Nuevo Proyecto">
+                        <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+                            @click.prevent="modalOpen = true" aria-controls="feedback-modal" title="Nuevo Proyecto">
                             <svg class="w-4 h-4 fill-current opacity-50 shrink-0" viewBox="0 0 16 16">
                                 <path
                                     d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                             </svg>
                             <span class="hidden xs:block ml-2">Nuevo Proyecto</span>
                         </button>
-                        <div class="fixed inset-0 bg-slate-900 bg-opacity-70 z-50 transition-opacity"
-                            x-show="modalOpen" x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                            x-transition:leave="transition ease-out duration-100"
-                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
-                            aria-hidden="true" x-cloak></div>
+                        <div class="fixed inset-0 bg-slate-900 bg-opacity-70 z-50 transition-opacity" x-show="modalOpen"
+                            x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
+                            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
+                            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" aria-hidden="true"
+                            x-cloak></div>
                         <!-- Modal dialog -->
                         <div id="feedback-modal"
                             class="fixed inset-0 z-50 overflow-hidden flex items-center my-4 justify-center px-4 sm:px-6"
@@ -109,11 +108,10 @@
                                 <div class="px-5 py-4">
                                     <div class="space-y-3 grid grid-cols-4 md:grid-cols-6 gap-4">
                                         <div class="col-span-5 col-start-1">
-                                            <label class="block text-sm font-medium mb-1"
-                                                for="nombre">Nombre<span
+                                            <label class="block text-sm font-medium mb-1" for="nombre">Nombre<span
                                                     class="text-rose-500">*</span></label>
-                                            <input id="nombre" class="form-input w-full px-2 py-1"
-                                                type="text" wire:model="nombre" required />
+                                            <input id="nombre" class="form-input w-full px-2 py-1" type="text"
+                                                wire:model="nombre" required />
                                             @error('nombre')
                                                 <small class="text-red-600">{{ $message }}</small>
                                             @enderror
@@ -121,18 +119,16 @@
                                         <div class="col-span-3 col-start-1">
                                             <label class="block text-sm font-medium mb-1"
                                                 for="descripcion">Descripción</label>
-                                            <input id="descripcion"
-                                                class="form-input w-full px-2 py-1" type="text"
-                                                wire:model="descripcion" />
+                                            <input id="descripcion" class="form-input w-full px-2 py-1"
+                                                type="text" wire:model="descripcion" />
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1"
-                                                for="cliente_id">Cliente<span
-                                                    class="text-rose-500">*</span></label>
+                                                for="cliente_id">Cliente<span class="text-rose-500">*</span></label>
                                             <select
                                                 class="w-full text-sm transition-all duration-100  rounded-lg shadow-sm outline-none focus:border-primary focus:ring-primary placeholder:text-gray-400 dark:bg-gray-700 disabled:opacity-70 dark:focus:border-primary"
-                                                placeholder="Cliente" id="cliente_id"
-                                                name="cliente_id" wire:model.defer="cliente_id">
+                                                placeholder="Cliente" id="cliente_id" name="cliente_id"
+                                                wire:model.defer="cliente_id">
                                                 <option hidden selected>Seleccione un cliente</option>
                                                 @foreach ($clientes as $cliente)
                                                     <option value="{{ $cliente->id }}">
@@ -145,18 +141,17 @@
                                             @enderror
                                         </div>
                                         <div class="col-span-3">
-                                            <label class="block text-sm font-medium mb-1"
-                                                for="fecha_fin">Fecha Fin</label>
-                                            <input id="fecha_fin" class="form-input w-full px-2 py-1"
-                                                type="date" wire:model="fecha_fin" required />
+                                            <label class="block text-sm font-medium mb-1" for="fecha_fin">Fecha
+                                                Fin</label>
+                                            <input id="fecha_fin" class="form-input w-full px-2 py-1" type="date"
+                                                wire:model="fecha_fin" required />
                                         </div>
                                         <div class="col-span-3">
                                             <label class="block text-sm font-medium mb-1"
                                                 for="responsable_id">Responsable</label>
                                             <select
                                                 class="w-full text-sm transition-all duration-100  rounded-lg shadow-sm outline-none focus:border-primary focus:ring-primary placeholder:text-gray-400 dark:bg-gray-700 disabled:opacity-70 dark:focus:border-primary"
-                                                placeholder="Cliente" id="responsable_id"
-                                                name="responsable_id"
+                                                placeholder="Cliente" id="responsable_id" name="responsable_id"
                                                 wire:model.defer="responsable_id">
                                                 <option value="">Seleccione un responsable</option>
                                                 @foreach ($usuarios as $usuario)
@@ -164,6 +159,12 @@
                                                         {{ $usuario->name }}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-span-3">
+                                            <label class="block text-sm font-medium mb-1"
+                                                for="ingresos_proyectados">Monto a cobrar</label>
+                                            <input id="ingresos_proyectados" class="form-input w-full px-2 py-1"
+                                                type="number" wire:model="ingresos_proyectados" required />
                                         </div>
                                     </div>
                                 </div>
@@ -173,8 +174,7 @@
                                         <button
                                             class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
                                             @click="modalOpen = false">Cancel</button>
-                                        <button
-                                            class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                        <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
                                             wire:click="crearProyecto"
                                             x-on:click="if (!@this.creatingProyecto) modalOpen = false">Crear
                                             Proyecto</button>
@@ -184,29 +184,37 @@
                             </div>
                         </div>
 
-                        
+
                     </div>
 
                 </div>
             </div>
             <!-- Right: Actions -->
             <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-
-                <!-- Filter button -->
-                {{-- <x-dropdown-filter align="right" /> --}}
-
-                <!-- Datepicker built with flatpickr -->
-                {{-- <x-datepicker /> --}}
             </div>
         </div>
         <div class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
-            <header class="px-5 py-4">
-                <h2 class="font-semibold text-slate-800 dark:text-slate-100">Todos los proyectos: <span
-                        class="text-slate-400 dark:text-slate-500 font-medium">{{ $proyectosCount }}</span></h2>
-            </header>
+            <div class="sm:flex justify-between sm:justify-between px-5 py-4">
+                <div class="relative flex-grow flex items-center">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input type="search" wire:model.debounce.700ms="search"
+                        class="block p-2 pl-10 text-sm text-gray-900 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 border-gray-300 dark:placeholder-gray-400
+                                md:w-72 sm:w-72 xs:w-24"
+                        placeholder="Buscar por nombre o apellido..." required>
+                </div>
+                <header class="py-4">
+                    <h2 class="font-semibold text-slate-800 dark:text-slate-100">Todos los proyectos: <span
+                            class="text-slate-400 dark:text-slate-500 font-medium">{{ $proyectosCount }}</span></h2>
+                </header>
+            </div>
 
-            <div>
-
+            <div class="overflow-x-auto">
                 <!-- Table -->
                 <table class="table-auto w-full dark:text-slate-300">
                     <!-- Table header -->
@@ -235,6 +243,19 @@
                     </thead>
                     <tbody class="text-xs divide-y divide-slate-200 dark:divide-slate-700">
                         @foreach ($proyectos as $proyecto)
+                            @php
+                                if ($proyecto->estado_id === 1) {
+                                    $status_color = 'bg-blue-200/30 text-blue-600';
+                                } elseif ($proyecto->estado_id === 2) {
+                                    $status_color = 'bg-green-200/30 text-green-600';
+                                } elseif ($proyecto->estado_id === 3) {
+                                    $status_color = 'bg-yellow-200/30 text-yellow-600';
+                                } elseif ($proyecto->estado_id === 4) {
+                                    $status_color = 'bg-red-200/30 text-red-600';
+                                } else {
+                                    $status_color = 'bg-gray-700 text-gray-400';
+                                }
+                            @endphp
                             <tr>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <div class="text-xs"> {{ $proyecto->cliente->apellidos ?? '' }}
@@ -247,7 +268,7 @@
                                     <div class="text-xs"> {{ $proyecto->fecha_inicio ?? '' }} </div>
                                 </td>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div class="text-xs"> {{ $proyecto->estado->nombre ?? '' }} </div>
+                                    <div class="inline-flex text-xs rounded-full text-center px-2.5 py-0.5 {{$status_color}}">{{ $proyecto->estado->nombre ?? '' }}</div>
                                 </td>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <div class="text-left text-xs {{-- font-medium dark:text-sky-400 --}}">
@@ -257,8 +278,8 @@
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <button class="focus:outline-none pr-1"
                                         wire:click="clientesProyectos({{ $proyecto->id }})" title="Proyectos">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" stroke-width="2"
-                                            class="w-7 h-6">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
+                                            stroke-width="2" class="w-7 h-6">
                                             <path
                                                 d="M0 96C0 60.7 28.7 32 64 32H196.1c19.1 0 37.4 7.6 50.9 21.1L289.9 96H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zM64 80c-8.8 0-16 7.2-16 16V416c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V160c0-8.8-7.2-16-16-16H286.6c-10.6 0-20.8-4.2-28.3-11.7L213.1 87c-4.5-4.5-10.6-7-17-7H64z"
                                                 fill="green" />
@@ -390,6 +411,12 @@
                                     <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="col-span-3">
+                            <label class="block text-sm font-medium mb-1" for="editingresos_proyectados">Fecha
+                                Fin</label>
+                            <input id="editingresos_proyectados" class="form-input w-full px-2 py-1" type="number"
+                                wire:model="editingresos_proyectados" />
                         </div>
                     </div>
                 </div>

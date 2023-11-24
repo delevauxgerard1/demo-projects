@@ -16,15 +16,25 @@ class IndexProyectos extends Component
     public $paginas = 15;
     public $sort = 'cliente_id';
     public $direction = 'desc';
+    public $search;
 
-    protected $listeners = ['render','deleteConfirmed'=>'deleteProyecto'];
+    protected $listeners = ['render', 'deleteConfirmed' => 'deleteProyecto'];
 
     public function render()
     {
-        $proyectos = Proyecto::where("activo", "=", "1")
-            ->orderBy($this->sort, $this->direction)
-            ->paginate($this->paginas);
+        $query = Proyecto::where("activo", "=", "1")
+            ->orderBy($this->sort, $this->direction);
 
+        if ($this->search) {
+            $query->whereHas('cliente', function ($q) {
+                $q->where(function ($query) {
+                    $query->where('nombres', 'LIKE', '%' . $this->search . '%')
+                        ->orWhere('apellidos', 'LIKE', '%' . $this->search . '%');
+                });
+            });
+        }
+
+        $proyectos = $query->paginate($this->paginas);
         $proyectosCount = Proyecto::where("activo", "=", "1")->count();
         $clientes = Cliente::all();
         $usuarios = User::all();
@@ -33,14 +43,14 @@ class IndexProyectos extends Component
         return view('livewire.index-proyectos', compact('proyectos', 'proyectosCount', 'clientes', 'usuarios', 'estados'));
     }
 
-    public $nombre, $descripcion, $cliente_id, $fecha_inicio, $fecha_fin, $estado_id, $responsable_id;
+    public $nombre, $descripcion, $cliente_id, $fecha_inicio, $fecha_fin, $estado_id, $responsable_id, $ingresos_proyectados;
 
     public $creatingProyecto, $modalOpen = false;
 
     public function crearProyecto()
     {
         $this->creatingProyecto = true;
-    
+
         $this->validate(
             [
                 'nombre' => 'required',
@@ -51,9 +61,9 @@ class IndexProyectos extends Component
                 'cliente_id.required' => 'Debe poseer un cliente.'
             ]
         );
-    
+
         $estado = Estado::find(1);
-    
+
         Proyecto::create([
             'nombre' => $this->nombre,
             'descripcion' => $this->descripcion,
@@ -61,11 +71,12 @@ class IndexProyectos extends Component
             'fecha_inicio' => now(),
             'fecha_fin' => $this->fecha_fin,
             'estado_id' => $estado->id,
-            'responsable_id' => $this->responsable_id
+            'responsable_id' => $this->responsable_id,
+            'ingresos_proyectados' => $this->ingresos_proyectados,
         ]);
-    
+
         $this->creatingProyecto = false;
-        $this->reset(['nombre', 'descripcion', 'cliente_id', 'fecha_inicio', 'fecha_fin', 'estado_id', 'responsable_id']);
+        $this->reset(['nombre', 'descripcion', 'cliente_id', 'fecha_inicio', 'fecha_fin', 'estado_id', 'responsable_id', 'ingresos_proyectados']);
         $this->emit('alert', 'El proyecto fue agregado correctamente!');
         $this->emit('render');
     }
@@ -82,7 +93,7 @@ class IndexProyectos extends Component
 
     public $proyectoModalOpen = false;
 
-    public $editnombre, $editdescripcion, $editcliente_id, $editfecha_inicio, $editfecha_fin, $editestado_id, $editresponsable_id;
+    public $editnombre, $editdescripcion, $editcliente_id, $editfecha_inicio, $editfecha_fin, $editestado_id, $editresponsable_id, $editingresos_proyectados;
 
     public function abrirModalEdicion($proyectoId)
     {
@@ -95,6 +106,7 @@ class IndexProyectos extends Component
         $this->editfecha_fin = $proyecto->fecha_fin;
         $this->editestado_id = $proyecto->estado_id;
         $this->editresponsable_id = $proyecto->responsable_id;
+        $this->editingresos_proyectados = $proyecto->ingresos_proyectados;
 
         $this->proyectoModalOpen = true;
     }
@@ -125,12 +137,13 @@ class IndexProyectos extends Component
             'fecha_fin' => $this->editfecha_fin,
             'estado_id' => $this->editestado_id,
             'responsable_id' => $this->editresponsable_id,
+            'ingresos_proyectados' => $this->editingresos_proyectados,
         ]);
 
         $this->dispatchBrowserEvent('cerrarModalEdicion');
 
         $this->updatingProyecto = false;
-        $this->reset(['editnombre', 'editdescripcion', 'editcliente_id', 'editfecha_inicio', 'editfecha_fin', 'editestado_id', 'editresponsable_id']);
+        $this->reset(['editnombre', 'editdescripcion', 'editcliente_id', 'editfecha_inicio', 'editfecha_fin', 'editestado_id', 'editresponsable_id', 'editingresos_proyectados']);
 
         $this->proyectoModalOpen = false;
         $this->emit('render');
@@ -139,17 +152,19 @@ class IndexProyectos extends Component
 
     public $delete_id;
 
-    public function deleteConfirmation($id){
+    public function deleteConfirmation($id)
+    {
         $this->delete_id = $id;
         $this->dispatchBrowserEvent('show-delete-confirmation');
     }
 
-    public function deleteProyecto(){
+    public function deleteProyecto()
+    {
         $proyecto = Proyecto::where('id', $this->delete_id)->first();
         $proyecto->update(['activo' => 0]);
 
         $this->dispatchBrowserEvent('proyectoBorrado');
         $this->emit('render');
-        $this->emit('alert','Proyecto borrado correctamente!');
+        $this->emit('alert', 'Proyecto borrado correctamente!');
     }
 }

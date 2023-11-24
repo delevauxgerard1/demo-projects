@@ -19,6 +19,7 @@ class Proyecto extends Model
         'fecha_fin',
         'estado_id',
         'responsable_id',
+        'ingresos_proyectados',
         'activo'
     ];
 

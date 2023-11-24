@@ -25,19 +25,29 @@
                 <div
                     class="flex flex-col col-span-full bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
                     <div class="px-5 py-6">
-                        <div class="md:flex md:justify-between md:items-center">
-                            <div class="flex items-center mb-4 md:mb-0">
-                                <div>
-                                    <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">
-                                        Cliente: {{ $cliente->apellidos }} {{ $cliente->nombres }}
-                                    </h1>
-                                    <div class="text-xl"></strong>Resumen del proyecto:</div>
-                                    <div class="text-2xl font-bold text-emerald-500">
-                                        Porcentaje de tareas finalizadas:
-                                        {{ $this->calcularPorcentajeTareasFinalizadas($proyectoSeleccionado->id) }} %
-                                    </div>
+                        <div class="flex items-center justify-between mb-4 md:mb-0">
+                            <div>
+                                <h1 class="text-2xl md:text-2xl text-slate-800 dark:text-slate-100 font-bold">
+                                    Cliente: {{ $cliente->apellidos }} {{ $cliente->nombres }}
+                                </h1>
+                                <div class="text-xl"></strong>Resumen del proyecto:</div>
+                                <div class="text-2xl font-bold text-emerald-500">
+                                    Porcentaje de tareas finalizadas:
+                                    {{ $this->calcularPorcentajeTareasFinalizadas($proyectoSeleccionado->id) }} %
                                 </div>
                             </div>
+                            @if ($this->todasTareasCompletadasHabilitarFactura($proyectoSeleccionado->id))
+                                <div class="pb-16">
+                                    <button class="btn bg-green-500 hover:bg-green-600 text-white"
+                                        wire:click="generarFactura({{ $proyectoSeleccionado->id }})">
+                                        <svg class="w-4 h-4 shrink-0 fill-current mr-2" viewBox="0 0 16 16">
+                                            <path
+                                                d="M15 4c.6 0 1 .4 1 1v10c0 .6-.4 1-1 1H3c-1.7 0-3-1.3-3-3V3c0-1.7 1.3-3 3-3h7c.6 0 1 .4 1 1v3h4zM2 3v1h7V2H3c-.6 0-1 .4-1 1zm12 11V6H2v7c0 .6.4 1 1 1h11zm-3-5h2v2h-2V9z" />
+                                        </svg>
+                                        <span class="hidden xs:block ml-2">Generar factura</span>
+                                    </button>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -136,7 +146,7 @@
                         </div>
                     </header>
                     <div
-                        class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 p-4">
+                        class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 p-4 overflow-x-auto">
                         @if ($tareas->count() > 0)
                             <table class="table-auto w-full dark:text-slate-300">
                                 <!-- Table header -->
@@ -200,7 +210,19 @@
 
                             </table>
                         @else
-                            <p>No hay tareas asociadas a este proyecto.</p>
+                            <div
+                                class="px-4 py-7 rounded-sm text-sm border bg-amber-100 dark:bg-amber-400/30 border-amber-200 dark:border-transparent text-amber-600 dark:text-amber-400">
+                                <div class="flex w-full justify-between items-start">
+                                    <div class="flex">
+                                        <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+                                        </svg>
+                                        <div class="text-lg">No hay tareas asociadas a este proyecto.</div>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -213,6 +235,19 @@
                         class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 h-full flex flex-col px-5 py-6">
                         <div class="relative w-full max-w-sm mx-auto p-3 rounded-2xl">
                             <div class="relative p-5 rounded-xl overflow-hidden">
+                                <div
+                                class="px-4 py-7 rounded-sm text-sm border bg-amber-100 dark:bg-amber-400/30 border-amber-200 dark:border-transparent text-amber-600 dark:text-amber-400">
+                                <div class="flex w-full justify-between items-start">
+                                    <div class="flex">
+                                        <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+                                        </svg>
+                                        <div class="text-lg">Próximamente.</div>
+                                    </div>
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -294,4 +329,14 @@
             </div>
         </div>
     </div>
+
+
+
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('generarFacturaPDF', proyectoId => {
+                window.open(`/ADR-clientes/public/generar-factura/${proyectoId}`, '_blank');
+            });
+        });
+    </script>
 </div>
