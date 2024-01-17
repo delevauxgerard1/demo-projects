@@ -15,8 +15,7 @@
                             <path
                                 d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
                         </svg>
-                        <div>Los datos mostrados son ficticios. Esto es una demostración. Sentite
-                            libre de explorar la página y sus herramientas.</div>
+                        <div>Los botones están inhabilitados porque esto es un demo.</div>
                     </div>
                     <button class="opacity-70 hover:opacity-80 ml-3 mt-[3px]" @click="open = false">
                         <div class="sr-only">Close</div>
