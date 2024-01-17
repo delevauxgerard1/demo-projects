@@ -7,8 +7,8 @@
                 <div class="inline-flex mb-8">
                     <img src="{{ asset('images/404-illustration.svg') }}" width="176" height="176" alt="404 illustration" />
                 </div>
-                <div class="mb-6">Hmm...this page doesn’t exist. Try searching for something else!</div>
-                <a href="{{ route('dashboard') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">Back To Dashboard</a>
+                <div class="mb-6">La página a la que intentas acceder no existe. Busca otra!</div>
+                <a href="{{ route('dashboard') }}" class="btn bg-indigo-500 hover:bg-indigo-600 text-white">Volver a Clientes</a>
             </div>
 
         </div>

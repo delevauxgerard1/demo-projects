@@ -1,5 +1,5 @@
 <x-authentication-layout>
-    <h1 class="text-3xl text-slate-800 dark:text-slate-100 font-bold mb-6">{{ __('Iniciar Sesión') }}</h1>
+    <h1 class="text-3xl text-slate-800 dark:text-slate-800 font-bold mb-6">{{ __('Iniciar Sesión') }}</h1>
     @if (session('status'))
         <div class="mb-4 font-medium text-sm text-green-600">
             {{ session('status') }}
@@ -33,12 +33,12 @@
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" type="email" name="email" :value="old('email')" required autofocus
-                    placeholder="demo@demo.com" />
+                    placeholder="demo@demo.com" value="demo@demo.com"/>
             </div>
             <div>
                 <x-jet-label for="password" value="{{ __('Password') }}" />
                 <x-jet-input id="password" type="password" name="password" required autocomplete="current-password"
-                    placeholder="demo1234" />
+                    placeholder="demo1234" value="demo1234" />
             </div>
         </div>
         <div class="flex items-center justify-between mt-6">
