@@ -32,8 +32,7 @@
                                 </h1>
                                 <div class="text-xl"></strong>Resumen del proyecto:</div>
                                 <div class="text-2xl font-bold text-emerald-500">
-                                    Porcentaje de tareas finalizadas:
-                                    {{ $this->calcularPorcentajeTareasFinalizadas($proyectoSeleccionado->id) }} %
+                                    Porcentaje de tareas finalizadas: {{ $this->calcularPorcentajeTareasFinalizadas($proyectoSeleccionado->id) }} %
                                 </div>
                             </div>
                             @if ($this->todasTareasCompletadasHabilitarFactura($proyectoSeleccionado->id))
@@ -130,15 +129,19 @@
                                     </div>
                                     <!-- Modal footer -->
                                     <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                                        <div class="flex flex-wrap justify-end space-x-2">
-                                            <button
-                                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                                                @click="modalOpen = false">Cancel</button>
-                                            <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                                wire:click="crearTarea"
-                                                x-on:click="if (!@this.creatingCliente) modalOpen = false">Crear
-                                                Tarea</button>
-
+                                        <div class="flex flex-wrap justify-between items-center">
+                                            <div class="text-sm text-red-500 pb-2">
+                                                Los campos con * son obligatorios
+                                            </div>
+                                            <div class="flex space-x-2">
+                                                <button
+                                                    class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                                    @click="modalOpen = false">Cancel</button>
+                                                <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                                    wire:click="crearTarea"
+                                                    x-on:click="if (!@this.creatingCliente) modalOpen = false">Crear
+                                                    Tarea</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -236,18 +239,18 @@
                         <div class="relative w-full max-w-sm mx-auto p-3 rounded-2xl">
                             <div class="relative p-5 rounded-xl overflow-hidden">
                                 <div
-                                class="px-4 py-7 rounded-sm text-sm border bg-amber-100 dark:bg-amber-400/30 border-amber-200 dark:border-transparent text-amber-600 dark:text-amber-400">
-                                <div class="flex w-full justify-between items-start">
-                                    <div class="flex">
-                                        <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3"
-                                            viewBox="0 0 16 16">
-                                            <path
-                                                d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
-                                        </svg>
-                                        <div class="text-lg">Próximamente.</div>
+                                    class="px-4 py-7 rounded-sm text-sm border bg-amber-100 dark:bg-amber-400/30 border-amber-200 dark:border-transparent text-amber-600 dark:text-amber-400">
+                                    <div class="flex w-full justify-between items-start">
+                                        <div class="flex">
+                                            <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+                                            </svg>
+                                            <div class="text-lg">Próximamente.</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
@@ -315,15 +318,20 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                    <div class="flex flex-wrap justify-end space-x-2">
-                        <button
-                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                            @click="modalOpen = false">Cancel</button>
-                        <form wire:submit.prevent="actualizarTarea">
-                            <!-- Campos de edición aquí -->
-                            <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                @click="actualizarTarea">Actualizar Tarea</button>
-                        </form>
+                    <div class="flex flex-wrap justify-between items-center">
+                        <div class="text-sm text-red-500 pb-2">
+                            Los campos con * son obligatorios
+                        </div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                @click="modalOpen = false">Cancel</button>
+                            <form wire:submit.prevent="actualizarTarea">
+                                <!-- Campos de edición aquí -->
+                                <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                    @click="actualizarTarea">Actualizar Tarea</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,16 +1,11 @@
 <div>
     <div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
 
-
-
-        <!-- Welcome banner -->
         <x-dashboard.welcome-banner />
 
-        <!-- Dashboard actions -->
         <div class="sm:flex sm:justify-between sm:items-center mb-8">
             <div>
                 <div class="m-1.5">
-                    <!-- Start -->
                     <div x-data="{ modalOpen: false }">
 
                         <button class="btn bg-indigo-500 hover:bg-indigo-600 text-white" @click.prevent="modalOpen = true"
@@ -32,7 +27,8 @@
                                                 <path
                                                     d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
                                             </svg>
-                                            <div>Los datos mostrados son ficticios. Esto es una demostración. Sentite libre de explorar la página y sus herramientas.</div>
+                                            <div>Los datos mostrados son ficticios. Esto es una demostración. Sentite
+                                                libre de explorar la página y sus herramientas.</div>
                                         </div>
                                         <button class="opacity-70 hover:opacity-80 ml-3 mt-[3px]" @click="open = false">
                                             <div class="sr-only">Close</div>
@@ -45,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <!-- Modal backdrop -->
                         <div class="fixed inset-0 bg-slate-900 bg-opacity-70 z-50 transition-opacity" x-show="modalOpen"
                             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
@@ -132,32 +128,30 @@
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                                    <div class="flex flex-wrap justify-end space-x-2">
-                                        <button
-                                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                                            @click="modalOpen = false">Cancel</button>
-                                        <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                            wire:click="crearCliente"
-                                            x-on:click="if (!@this.creatingCliente) modalOpen = false">Crear
-                                            Cliente</button>
 
+                                    <div class="flex flex-wrap justify-between items-center">
+                                        <div class="text-sm text-red-500 pb-2">
+                                            Los campos con * son obligatorios
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                                wire:click="crearCliente"
+                                                x-on:click="if (!@this.creatingCliente) modalOpen = false">Crear
+                                                Cliente</button>
+                                            <button
+                                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                                @click="modalOpen = false">Cancel</button>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Right: Actions -->
-            <div class="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-
-                <!-- Filter button -->
-                {{-- <x-dropdown-filter align="right" /> --}}
-
-                <!-- Datepicker built with flatpickr -->
-                {{-- <x-datepicker /> --}}
-            </div>
         </div>
+
         <div class="bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
             <div class="sm:flex justify-between sm:justify-between px-5 py-4">
                 <div class="relative flex-grow flex items-center">
@@ -169,9 +163,9 @@
                         </svg>
                     </div>
                     <input type="search" wire:model.debounce.700ms="search"
-                        class="block p-2 pl-10 text-sm text-gray-900 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 border-gray-300 dark:placeholder-gray-400
-                                md:w-72 sm:w-72 xs:w-24"
-                        placeholder="Buscar por nombre o apellido..." required>
+                        class="block p-2 pl-10 text-sm text-gray-900 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 border-gray-300 dark:placeholder-white dark:bg-slate-900/20
+                                md:w-72 sm:w-72 xs:w-24 dark:text-white"
+                        placeholder="Buscar por nombre o apellido..." required xss-protection>
                 </div>
                 <header class="py-4">
                     <h2 class="font-semibold text-slate-800 dark:text-slate-100">Todos los clientes: <span
@@ -226,11 +220,11 @@
                                         <div class="text-xs"> {{ $cliente->tel_movil }} </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left text-xs {{-- font-medium dark:text-sky-400 --}}"> {{ $cliente->profesion }}
+                                        <div class="text-left text-xs"> {{ $cliente->profesion }}
                                         </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                        <div class="text-left text-xs {{-- font-medium dark:text-emerald-400 --}}"> {{ $cliente->email }}
+                                        <div class="text-left text-xs"> {{ $cliente->email }}
                                         </div>
                                     </td>
                                     <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
@@ -269,8 +263,6 @@
                         @endforeach
                     </table>
                 </div>
-
-
             </div>
         </div>
         <div class="mt-8">
@@ -361,15 +353,20 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                    <div class="flex flex-wrap justify-end space-x-2">
-                        <button
-                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                            @click="modalOpen = false">Cancel</button>
-                        <form wire:submit.prevent="actualizarCliente">
-                            <!-- Campos de edición aquí -->
-                            <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                @click="actualizarCliente">Actualizar Cliente</button>
-                        </form>
+                    <div class="flex flex-wrap justify-between items-center">
+                        <div class="text-sm text-red-500 pb-2">
+                            Los campos con * son obligatorios
+                        </div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                @click="modalOpen = false">Cancel</button>
+                            <form wire:submit.prevent="actualizarCliente">
+                                <button type="submit"
+                                    class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white">Actualizar
+                                    Cliente</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

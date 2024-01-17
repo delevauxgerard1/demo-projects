@@ -22,17 +22,17 @@
                     <h2 class="font-semibold text-slate-800 dark:text-slate-100">Porcentaje total de tareas completadas
                     </h2>
                 </header>
-                <div class="flex flex-col h-full">
+                <div class="flex flex-col h-full pl-2 pb-4">
                     <canvas id="myChart2" width="100" height="100"></canvas>
                 </div>
             </div>
             <div
-                class="flex flex-col col-span-full xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700">
+                class="flex flex-col col-span-full xl:col-span-3 bg-white dark:bg-slate-800 shadow-lg rounded-sm border border-slate-200 dark:border-slate-700 pr-2 pl-3">
                 <header class="px-5 py-4 border-b border-slate-100 dark:border-slate-700">
                     <h2 class="font-semibold text-slate-800 dark:text-slate-100">Total de ingresos en el año: <span
                             id="year"></span></h2>
                 </header>
-                <div class="flex flex-col h-full">
+                <div class="flex flex-col h-full pt-2 pb-2">
                     <canvas id="myChart3" width="100" height="100"></canvas>
                 </div>
             </div>

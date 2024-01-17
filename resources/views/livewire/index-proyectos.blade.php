@@ -70,6 +70,31 @@
                             </svg>
                             <span class="hidden xs:block ml-2">Nuevo Proyecto</span>
                         </button>
+                        <div class="pt-4">
+                            <div x-show="open" x-data="{ open: true }" role="alert">
+                                <div
+                                    class="inline-flex min-w-80 px-4 py-2 rounded-sm text-sm border bg-amber-100 dark:bg-amber-400/30 border-amber-200 dark:border-transparent text-amber-600 dark:text-amber-400">
+                                    <div class="flex w-full justify-between items-start">
+                                        <div class="flex">
+                                            <svg class="w-4 h-4 shrink-0 fill-current opacity-80 mt-[3px] mr-3"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 0C3.6 0 0 3.6 0 8s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 12c-.6 0-1-.4-1-1s.4-1 1-1 1 .4 1 1-.4 1-1 1zm1-3H7V4h2v5z" />
+                                            </svg>
+                                            <div>Los datos mostrados son ficticios. Esto es una demostración. Sentite
+                                                libre de explorar la página y sus herramientas.</div>
+                                        </div>
+                                        <button class="opacity-70 hover:opacity-80 ml-3 mt-[3px]" @click="open = false">
+                                            <div class="sr-only">Close</div>
+                                            <svg class="w-4 h-4 fill-current">
+                                                <path
+                                                    d="M7.95 6.536l4.242-4.243a1 1 0 111.415 1.414L9.364 7.95l4.243 4.242a1 1 0 11-1.415 1.415L7.95 9.364l-4.243 4.243a1 1 0 01-1.414-1.415L6.536 7.95 2.293 3.707a1 1 0 011.414-1.414L7.95 6.536z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="fixed inset-0 bg-slate-900 bg-opacity-70 z-50 transition-opacity" x-show="modalOpen"
                             x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0"
                             x-transition:enter-end="opacity-100" x-transition:leave="transition ease-out duration-100"
@@ -170,15 +195,19 @@
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                                    <div class="flex flex-wrap justify-end space-x-2">
-                                        <button
-                                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                                            @click="modalOpen = false">Cancel</button>
-                                        <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                            wire:click="crearProyecto"
-                                            x-on:click="if (!@this.creatingProyecto) modalOpen = false">Crear
-                                            Proyecto</button>
-
+                                    <div class="flex flex-wrap justify-between items-center">
+                                        <div class="text-sm text-red-500 pb-2">
+                                            Los campos con * son obligatorios
+                                        </div>
+                                        <div class="flex space-x-2">
+                                            <button
+                                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                                @click="modalOpen = false">Cancel</button>
+                                            <button class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                                wire:click="crearProyecto"
+                                                x-on:click="if (!@this.creatingProyecto) modalOpen = false">Crear
+                                                Proyecto</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -204,9 +233,9 @@
                         </svg>
                     </div>
                     <input type="search" wire:model.debounce.700ms="search"
-                        class="block p-2 pl-10 text-sm text-gray-900 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 border-gray-300 dark:placeholder-gray-400
-                                md:w-72 sm:w-72 xs:w-24"
-                        placeholder="Buscar por nombre o apellido..." required>
+                        class="block p-2 pl-10 text-sm text-gray-900 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 border-gray-300 dark:placeholder-white dark:bg-slate-900/20
+                                md:w-72 sm:w-72 xs:w-24 dark:text-white"
+                        placeholder="Buscar por nombre o apellido..." required xss-protection>
                 </div>
                 <header class="py-4">
                     <h2 class="font-semibold text-slate-800 dark:text-slate-100">Todos los proyectos: <span
@@ -245,15 +274,15 @@
                         @foreach ($proyectos as $proyecto)
                             @php
                                 if ($proyecto->estado_id === 1) {
-                                    $status_color = 'bg-blue-200/30 text-blue-600';
+                                    $status_color = 'bg-blue-200/30 dark:text-blue-400 text-blue-600 dark:bg-slate-900';
                                 } elseif ($proyecto->estado_id === 2) {
-                                    $status_color = 'bg-green-200/30 text-green-600';
+                                    $status_color = 'bg-green-200/30 dark:text-green-500 text-green-600 dark:bg-slate-900';
                                 } elseif ($proyecto->estado_id === 3) {
-                                    $status_color = 'bg-yellow-200/30 text-yellow-600';
+                                    $status_color = 'bg-yellow-200/30 dark:text-yellow-500 text-yellow-600 dark:bg-slate-900';
                                 } elseif ($proyecto->estado_id === 4) {
-                                    $status_color = 'bg-red-200/30 text-red-600';
+                                    $status_color = 'bg-red-200/30 dark:text-red-400 text-red-600 dark:bg-slate-900';
                                 } else {
-                                    $status_color = 'bg-gray-700 text-gray-400';
+                                    $status_color = 'bg-gray-700 dark:text-gray-400 text-gray-600 dark:bg-slate-900';
                                 }
                             @endphp
                             <tr>
@@ -268,7 +297,9 @@
                                     <div class="text-xs"> {{ $proyecto->fecha_inicio ?? '' }} </div>
                                 </td>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
-                                    <div class="inline-flex text-xs rounded-full text-center px-2.5 py-0.5 {{$status_color}}">{{ $proyecto->estado->nombre ?? '' }}</div>
+                                    <div
+                                        class="inline-flex text-xs rounded-full text-center px-2.5 py-0.5 {{ $status_color }}">
+                                        {{ $proyecto->estado->nombre ?? '' }}</div>
                                 </td>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
                                     <div class="text-left text-xs {{-- font-medium dark:text-sky-400 --}}">
@@ -371,7 +402,7 @@
                             <label class="block text-sm font-medium mb-1" for="email">Cliente<span
                                     class="text-rose-500">*</span></label>
                             <select id="editcliente_id" name="editcliente_id" wire:model.defer="editcliente_id"
-                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                 <option value="">Seleccione una opción</option>
                                 @foreach ($clientes as $cliente)
                                     <option value="{{ $cliente->id }}">{{ $cliente->apellidos }}
@@ -395,7 +426,7 @@
                         <div class="col-span-3">
                             <label class="block text-sm font-medium mb-1" for="editestado_id">Estado</label>
                             <select id="editestado_id" name="editestado_id" wire:model.defer="editestado_id"
-                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                 @foreach ($estados as $estado)
                                     <option value="{{ $estado->id }}">{{ $estado->nombre }}</option>
                                 @endforeach
@@ -405,7 +436,7 @@
                             <label class="block text-sm font-medium mb-1" for="editresponsable_id">Responsable</label>
                             <select id="editresponsable_id" name="editresponsable_id"
                                 wire:model.defer="editresponsable_id"
-                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                class="rounded-lg border border-solid border-gray-300 flex-1 appearance-none w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:border-transparent dark:bg-gray-700 dark:text-white">
                                 <option value="">Seleccione una opción</option>
                                 @foreach ($usuarios as $usuario)
                                     <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
@@ -422,15 +453,20 @@
                 </div>
                 <!-- Modal footer -->
                 <div class="px-5 py-4 border-t border-slate-200 dark:border-slate-700">
-                    <div class="flex flex-wrap justify-end space-x-2">
-                        <button
-                            class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-                            @click="modalOpen = false">Cancel</button>
-                        <form wire:submit.prevent="actualizarProyecto">
-                            <!-- Campos de edición aquí -->
-                            <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
-                                @click="actualizarProyecto">Actualizar Proyecto</button>
-                        </form>
+                    <div class="flex flex-wrap justify-between items-center">
+                        <div class="text-sm text-red-500 pb-2">
+                            Los campos con * son obligatorios
+                        </div>
+                        <div class="flex space-x-2">
+                            <button
+                                class="btn-sm bg-red-500 dark:bg-red-500 hover:bg-red-600 dark:hover:bg-red-600 text-white dark:text-white border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                                @click="modalOpen = false">Cancel</button>
+                            <form wire:submit.prevent="actualizarProyecto">
+                                <!-- Campos de edición aquí -->
+                                <button type="submit" class="btn-sm bg-indigo-500 hover:bg-indigo-600 text-white"
+                                    @click="actualizarProyecto">Actualizar Proyecto</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

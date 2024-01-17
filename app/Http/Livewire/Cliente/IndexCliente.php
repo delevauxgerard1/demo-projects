@@ -47,15 +47,18 @@ class IndexCliente extends Component
 
         $this->validate(
             [
-                'nombres' => 'required',
-                'apellidos' => 'required',
-                'email' => 'required|unique:clientes'
+                'nombres' => 'required|max:100',
+                'apellidos' => 'required|max:100',
+                'email' => 'required|unique:clientes|email|max:100'
             ],
             [
                 'nombres.required' => 'Debe ingresar un Nombre.',
                 'apellidos.required' => 'Debe ingresar un Apellido.',
                 'email.required' => 'Debe ingresar un email.',
-                'email.unique' => 'Ese email ya existe.'
+                'email.unique' => 'Ese email ya existe.',
+                'nombres.max' => 'El máximo de caracteres es 100.',
+                'apellidos.max' => 'El máximo de caracteres es 100.',
+                'email.max' => 'El máximo de caracteres es 100.'
             ]
         );
 
@@ -106,14 +109,17 @@ class IndexCliente extends Component
 
         $this->validate(
             [
-                'editNombres' => 'required',
-                'editApellidos' => 'required',
-                'editEmail' => 'required'
+                'editNombres' => 'required|max:100',
+                'editApellidos' => 'required|max:100',
+                'editEmail' => 'required|max:100|email'
             ],
             [
                 'editNombres.required' => 'Debe ingresar un Nombre.',
                 'editApellidos.required' => 'Debe ingresar un Apellido.',
-                'editEmail.required' => 'Debe ingresar un email.'
+                'editEmail.required' => 'Debe ingresar un email.',
+                'editNombres.max' => 'El máximo de caracteres es 100.',
+                'editApellidos.max' => 'El máximo de caracteres es 100.',
+                'editEmail.max' => 'El máximo de caracteres es 100.'
             ]
         );
 
