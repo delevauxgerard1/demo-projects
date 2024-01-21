@@ -379,7 +379,7 @@
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('generarFacturaPDF', proyectoId => {
-                window.open(`/ADR-clientes/public/generar-factura/${proyectoId}`, '_blank');
+                window.open(`/demo-projects/public/generar-factura/${proyectoId}`, '_blank');
             });
         });
     </script>

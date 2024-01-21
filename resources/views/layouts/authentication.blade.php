@@ -62,7 +62,7 @@
 
             <!-- Image -->
             <div class="hidden md:block absolute top-0 bottom-0 right-0 md:w-1/2" aria-hidden="true">
-                <img class="object-cover object-center w-full h-full" src="{{ asset('images/auth-image.jpg') }}"
+                <img class="object-cover object-center w-full h-full" src="{{ asset('images/auth-image.webp') }}"
                     width="760" height="1024" alt="Authentication image" />
                 <img class="absolute top-1/4 left-0 -translate-x-1/2 ml-8 hidden lg:block"
                     src="{{ asset('images/auth-decoration.png') }}" width="218" height="224"
