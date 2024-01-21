@@ -33,7 +33,7 @@
             <div>
                 <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" type="email" name="email" :value="old('email')" required autofocus
-                    placeholder="demo@demo.com" value="demo@demo.com"/>
+                    placeholder="demo@demo.com" value="demo@demo.com" autocomplete="username" />
             </div>
             <div>
                 <x-jet-label for="password" value="{{ __('Password') }}" />
