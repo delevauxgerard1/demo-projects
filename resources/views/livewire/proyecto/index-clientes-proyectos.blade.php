@@ -374,12 +374,10 @@
         @endif
     </div>
 
-
-
     <script>
         document.addEventListener('livewire:load', function() {
             Livewire.on('generarFacturaPDF', proyectoId => {
-                window.open(`/demo-projects/public/generar-factura/${proyectoId}`, '_blank');
+                window.open(`/generar-factura/${proyectoId}`, '_blank');
             });
         });
     </script>
