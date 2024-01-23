@@ -1,3 +1,6 @@
-Repo creado para la aprobación de ADR.
+Gestión de Proyectos
 
-Empresa de venta de servicios informáticos que cuenta con este sistema para el seguimiento y administración de usuarios, clientes, proyectos y reportes para la toma de decisiones.
+Página de clientes, proyectos y las tareas asociadas a los mismos para hacer un seguimiento de su avance. Se puede hacer operaciones CRUD con todos ellos, completar tareas, imprimir un modelo de factura y observar reportes estadísticos.
+Incluye testing con phpunit en su mayoría para componentes de livewire.
+
+
