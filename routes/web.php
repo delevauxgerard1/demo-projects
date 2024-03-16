@@ -19,5 +19,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/generar-factura/{proyectoId}', [FacturaController::class, 'generarFacturaPDF']);
     Route::fallback(function() {
         return view('pages/utility/404');
-    });    
+    });
+    
+    /* Estas son las rutas y estoy probando este comentario para github */
 });
