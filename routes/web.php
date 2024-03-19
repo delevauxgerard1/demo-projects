@@ -7,12 +7,13 @@ use App\Http\Livewire\IndexProyectos;
 use App\Http\Livewire\IndexReportes;
 use App\Http\Livewire\Proyecto\IndexClientesProyectos;
 use App\Http\Controllers\FacturaController;
+use App\Http\Livewire\Producto\IndexProducto;
 
 Route::redirect('/', 'login');
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/clientes', IndexCliente::class)->name('dashboard');
-    Route::get('/proyectos', IndexProyectos::class)->name('proyectos');
+    Route::get('/productos', IndexProducto::class)->name('productos');
     Route::get('/reportes', IndexReportes::class)->name('reportes');
     Route::get('/cliente/proyectos/{clienteid}', IndexClientesProyectos::class)->name('clientes.proyectos');
     Route::get('/cliente/proyectos/{clienteid}/{proyectoid?}', IndexClientesProyectos::class)->name('clientes.proyectosid');

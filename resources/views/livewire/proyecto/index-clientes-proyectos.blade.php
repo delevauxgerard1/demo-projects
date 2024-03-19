@@ -17,7 +17,7 @@
                                 </div>
                             </div>
                             <div class="text-right mt-1 text-base">
-                                <a href="{{ route('proyectos') }}" class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400" href="#0">Ir a proyectos -&gt;</a>
+                                <a href="{{ route('productos') }}" class="font-medium text-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400" href="#0">Ir a proyectos -&gt;</a>
                             </div>
 
                         </div>
